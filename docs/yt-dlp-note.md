@@ -2,7 +2,6 @@
 
 ## PP
 
-[여기](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#plugins)서 pp 관련된 내용 찾아보기
 
 ## yt-dlp args
 
