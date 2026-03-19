@@ -11,3 +11,6 @@
 - [ ] 인자 출력 부분 ** 사용해서 강조. 아래 내용 보고 인자(metavar 등)를 어떻게 쓰고 있고 파싱하는지 확인
     - https://docs.python.org/ko/3/howto/argparse-optparse.html
     - https://docs.python.org/ko/3/library/optparse.html
+
+- [ ] yt-dlp가 다운때 플리를 어떻게 가져오는지 디버깅용 출력 pp와 -j 옵션으로 알아내기. 출력 메시지 상 플리의 개략적인 정보를 알아오고 개별 영상을 불러오는 구조인데 내가 그냥 할때랑 다른 이유?
+- [ ] 
