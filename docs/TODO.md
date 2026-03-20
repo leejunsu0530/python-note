@@ -1,5 +1,18 @@
 # TODO
 
+TODO(여긴 계속 현황에 따라 수정될 예정):
+1. hfhub에서 intel npu 지원과 LLM 확인
+2. yt-dlp에서 info json이 어떻게 불러와지는지 확인
+3. gradio로 gui 만들기
+4. yt-dlp의 optparse에서 help 등을 어떻게 구성하는지 확인
+
+## hf 관련
+- [ ] 보니까 내 노트북 npu가 인텔이라 ov 지원 가능할지도?
+- [ ] 번역 모델(LLM) 테스트
+    - https://huggingface.co/models?search=llama
+    - https://huggingface.co/yanolja
+
+
 ## 파이썬 관련
 - [ ] gradio와 백앤드 연결 어떻게 할지
 - [ ] deque가 리스트에서 앞쪽에서 값을 뺄때는 더 속도가 빠르지 않나? 근데 그냥 제너레이터를 쓰면 되지 않나? 제너레이터 대신 그냥 반복문으로 즉석 처리를 하면 되지 않나?
