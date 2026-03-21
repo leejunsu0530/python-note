@@ -1,5 +1,13 @@
 # python-note 
 
+## typings
+
+### TypeDict
+
+### dataclass
+
+### 인자를 유지하는 형태
+
 ## 바다코끼리 연산자
 
 ## if문, for else문
