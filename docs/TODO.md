@@ -1,7 +1,7 @@
 # TODO
 
 TODO(여긴 계속 현황에 따라 수정될 예정):
-1. hfhub에서 intel npu 지원과 LLM 확인
+1. hfhub에서 intel npu 지원과 LLM 확인 << 일단 npu 되는거는 확인했으니까 후순위로
 2. yt-dlp에서 info json이 어떻게 불러와지는지 확인
 3. gradio로 gui 만들기
 4. yt-dlp의 optparse에서 help 등을 어떻게 구성하는지 확인
