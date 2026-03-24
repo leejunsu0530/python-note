@@ -2,7 +2,53 @@
 
 ## TODO
 - [ ] options.py 확인. 특히 142번째 줄의 뭔가 쓸모있어보이는 함수 등
-- [ ] -t 분석
+      아래는 그 쓸모있어보이는 함수인데, 설명을 제외한 부분을 구성하는데 이 클래스 내지는 함수를 사용할 수 있을듯.
+      
+```python
+class _YoutubeDLHelpFormatter(optparse.IndentedHelpFormatter):
+    def __init__(self):
+        # No need to wrap help messages if we're on a wide console
+        max_width = shutil.get_terminal_size().columns or 80
+        # The % is chosen to get a pretty output in README.md
+        super().__init__(width=max_width, max_help_position=int(0.45 * max_width))
+
+    @staticmethod
+    def format_option_strings(option):
+        """ ('-o', '--option') -> -o, --format METAVAR """
+        opts = join_nonempty(
+            option._short_opts and option._short_opts[0],
+            option._long_opts and option._long_opts[0],
+            delim=', ')
+        if option.takes_value():
+            opts += f' {option.metavar}'
+        return opts
+```
+
+      
+- [ ] -t 분석 < 보니까 그냥 생으로 구현하던데, 나도 따로 구현하고 내가 만든 alise도 추가
+      
+```python
+def format_option_help(self, formatter=None):
+        assert formatter, 'Formatter can not be None'
+        formatted_help = super().format_option_help(formatter=formatter)
+        formatter.indent()
+        heading = formatter.format_heading('Preset Aliases')
+        formatter.indent()
+        description = formatter.format_description(
+            'Predefined aliases for convenience and ease of use. Note that future versions of yt-dlp '
+            'may add or adjust presets, but the existing preset names will not be changed or removed')
+        result = []
+        for name, args in _PRESET_ALIASES.items():
+            option = optparse.Option('-t', help=shlex.join(args))
+            formatter.option_strings[option] = f'-t {name}'
+            result.append(formatter.format_option(option))
+        formatter.dedent()
+        formatter.dedent()
+        help_lines = '\n'.join(result)
+        return f'{formatted_help}\n{heading}{description}\n{help_lines}'
+
+
+```
 - [ ] 파서 구조 분석 추가적으로 필요
 
 ## PP
