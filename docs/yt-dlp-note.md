@@ -1,5 +1,10 @@
 # yt-dlp-note
 
+## TODO
+- [ ] options.py 확인. 특히 142번째 줄의 뭔가 쓸모있어보이는 함수 등
+- [ ] -t 분석
+- [ ] 파서 구조 분석 추가적으로 필요
+
 ## PP
 
 ### 1. PP의 기본 시점 정의 위치
@@ -263,16 +268,21 @@ extractor.add_option(
         'Pass ARGS arguments to the IE_KEY extractor. See "EXTRACTOR ARGUMENTS" for details. '
         'You can use this option multiple times to give arguments for different extractors'))
 
-```
-</details>
+general.add_option(
+    '--alias', metavar='ALIASES OPTIONS', dest='_', type='str', nargs=2,
+    action='callback', callback=_create_alias,
+    help=(
+        'Create aliases for an option string. Unless an alias starts with a dash "-", it is prefixed with "--". '
+        'Arguments are parsed according to the Python string formatting mini-language. '
+        'E.g. --alias get-audio,-X "-S aext:{0},abr -x --audio-format {0}" creates options '
+        '"--get-audio" and "-X" that takes an argument (ARG0) and expands to '
+        '"-S aext:ARG0,abr -x --audio-format ARG0". All defined aliases are listed in the --help output. '
+        'Alias options can trigger more aliases; so be careful to avoid defining recursive options. '
+        f'As a safety measure, each alias may be triggered a maximum of {_YoutubeDLOptionParser.ALIAS_TRIGGER_LIMIT} times. '
+        'This option can be used multiple times'))
 
+# ...
 
-또한 -t로 시작하는 프리셋은 다음과 같음.
-
-<details>
-<summary>-t 정의 함수 펼치기</summary>
-
-```python
 _PRESET_ALIASES = {
     'mp3': ['-f', 'ba[acodec^=mp3]/ba/b', '-x', '--audio-format', 'mp3'],
     'aac': ['-f', 'ba[acodec^=aac]/ba[acodec^=mp4a.40.]/ba/b', '-x', '--audio-format', 'aac'],
@@ -281,37 +291,27 @@ _PRESET_ALIASES = {
     'sleep': ['--sleep-subtitles', '5', '--sleep-requests', '0.75', '--sleep-interval', '10', '--max-sleep-interval', '20'],
 }
 
-...
-
-def format_option_help(self, formatter=None):
-    assert formatter, 'Formatter can not be None'
-    formatted_help = super().format_option_help(formatter=formatter)
-    formatter.indent()
-    heading = formatter.format_heading('Preset Aliases')
-    formatter.indent()
-    description = formatter.format_description(
-        'Predefined aliases for convenience and ease of use. Note that future versions of yt-dlp '
-        'may add or adjust presets, but the existing preset names will not be changed or removed')
-    result = []
-    for name, args in _PRESET_ALIASES.items():
-        option = optparse.Option('-t', help=shlex.join(args))
-        formatter.option_strings[option] = f'-t {name}'
-        result.append(formatter.format_option(option))
-    formatter.dedent()
-    formatter.dedent()
-    help_lines = '\n'.join(result)
-    return f'{formatted_help}\n{heading}{description}\n{help_lines}'
+# **여기 -t 있음**
+general.add_option(
+    '-t', '--preset-alias',
+    metavar='PRESET', dest='_', type='str',
+    action='callback', callback=_preset_alias_callback,
+    help=(
+        'Applies a predefined set of options. e.g. --preset-alias mp3. '
+        f'The following presets are available: {", ".join(_PRESET_ALIASES)}. '
+        'See the "Preset Aliases" section at the end for more info. '
+        'This option can be used multiple times'))
 
 ```
-
 </details>
+
 
 여기서 정의에 사용하는 인자는 다음과 같음.
 
 - metavars
 - type
 - choices(2개만 사용)
-- 
+- (추가 필요)
 
 ### 3. 옵션 꺼내기
 옵션은 다음과 같은 방법으로 꺼낼 수 있음.
