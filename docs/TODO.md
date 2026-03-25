@@ -1,6 +1,8 @@
 # TODO
 
 TODO(여긴 계속 현황에 따라 수정될 예정):
+계층적 구조를 가진 목차 편집기 만들기
+
 1. yt-dlp의 optparse에서 help 등을 어떻게 구성하는지 확인 < init과 options.py 해석
 2. yt-dlp에서 info json으로 다운로드하는 다운로더 만들기
 3. gradio로 gui 만들기
