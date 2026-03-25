@@ -3,6 +3,8 @@
 
 ## @classmethod와 @staticmethod
 
+## self와 cls의 정확한 이해
+
 ## 메직 메서드들
 
 ### `__new__`와 `__init__`의 차이
