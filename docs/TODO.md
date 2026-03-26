@@ -1,10 +1,12 @@
 # TODO
 
 TODO(여긴 계속 현황에 따라 수정될 예정):
-1. yt-dlp의 optparse에서 help 등을 어떻게 구성하는지 확인 < init과 options.py 해석
-2. yt-dlp에서 info json으로 다운로드하는 다운로더 만들기
-3. gradio로 gui 만들기
-4. 몽키패치 수정
+1. gradio 테스트를 제일 먼저 해보고, 그거 자유도가 생각만큼 안나오면 다른 gui로
+2. 클래스 배우기
+3. 타입 힌트 만들기
+4. 도움말 출력기 만들기
+5. info json 파일 기반 다운로드 관리자 만들기
+6. 몽키패치 수정
 -1. hfhub에서 intel npu 지원과 LLM 확인 << 일단 npu 되는거는 확인했으니까 후순위로
 
 ## hf 관련
