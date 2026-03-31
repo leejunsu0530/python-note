@@ -1,9 +1,8 @@
-
 import json
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-model_id = "yanolja/YanoljaNEXT-Rosetta-4B-2511-FP8"
+model_id = "yanolja/YanoljaNEXT-Rosetta-4B-2511"
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
     dtype=torch.bfloat16,
@@ -14,31 +13,32 @@ tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 target_language = "Korean"
 context = {
-  "context": "Simple introduction about a tech company.",
-  "tone": "Informative and helpful",
-  "glossary": {
-    "Yanolja NEXT": "야놀자넥스트",
-    "travel industry": "여행 산업",
-  }
+    "context": "Simple introduction about a tech company.",
+    "tone": "Informative and helpful",
+    "glossary": {
+        "Yanolja NEXT": "야놀자넥스트",
+        "travel industry": "여행 산업",
+    }
 }
 
 system = [f"Translate the user's text to {target_language}."]
 for key, value in context.items():
-  key_pascal = key.capitalize()
-  if isinstance(value, dict):
-    system.append(f"{key_pascal}:")
-    for f, t in value.items():
-      system.append(f"- {f} -> {t}")
-  else:
-    system.append(f"{key_pascal}: {value}")
+    key_pascal = key.capitalize()
+    if isinstance(value, dict):
+        system.append(f"{key_pascal}:")
+        for f, t in value.items():
+            system.append(f"- {f} -> {t}")
+    else:
+        system.append(f"{key_pascal}: {value}")
 
 system.append("Output format: JSON")
-system.append("Provide the final translation immediately without any other text.")
+system.append(
+    "Provide the final translation immediately without any other text.")
 
 source = {
-  "company_name": "Yanolja NEXT",
-  "description": "Yanolja NEXT is a company that provides cutting-edge "
-                 "technology for the global travel industry.",
+    "company_name": "Yanolja NEXT",
+    "description": "Yanolja NEXT is a company that provides cutting-edge "
+    "technology for the global travel industry.",
 }
 
 messages = [
@@ -46,7 +46,8 @@ messages = [
     {"role": "user", "content": json.dumps(source, ensure_ascii=False)},
 ]
 
-prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+prompt = tokenizer.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True)
 print(prompt)
 # <bos><start_of_turn>instruction
 # Translate the user's text to Korean.
@@ -61,7 +62,7 @@ print(prompt)
 # {"company_name": "Yanolja NEXT", "description": "Yanolja NEXT is a company that provides cutting-edge technology for the global travel industry."}<end_of_turn>
 # <start_of_turn>translation
 
-inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
+inputs = tokenizer(prompt, return_tensors="pt").to("auto")
 input_length = inputs["input_ids"].shape[1]
 
 with torch.inference_mode():
